@@ -1,0 +1,47 @@
+#!/bin/bash
+
+CWD=$(dirname "$0")
+TEST_PATH=$CWD/.test
+
+export BERKSHELF_PATH=$TEST_PATH/berkshelf
+export GEM_PATH=$TEST_PATH/gems
+
+function clean {
+  echo "cleaning test cache -  $TEST_PATH"
+  rm -rf $TEST_PATH/*
+}
+
+function bundle {
+    bundle install --binstubs --path=$GEM_PATH # install gem dependencies
+}
+
+function berks {
+   bin/berks install                          # install cookbook dependencies
+}
+
+function strainer {
+   bin/strainer test --fail-fast              # run tests 
+}
+
+case $1 in
+  'clean')
+    clean
+  ;;
+  'run')
+    bundle
+    berks
+    strainer
+  ;;
+  'bundle')
+    bundle
+  ;;
+  'berks')
+    berks
+  ;;
+  'strainer')
+    strainer
+  ;;
+  * )
+    echo "syntax $0 [clean|run|bundle|berks|strainer]"
+  ;;
+esac
