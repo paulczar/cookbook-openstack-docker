@@ -40,6 +40,7 @@ You'll also want to set the following in your environment to enable it :-
 
 * openstack["compute"]["driver"] = "docker.DockerDriver"
 * openstack["image"]["data_api"] = "glance.db.docker.api"
+* docker["bind_uri"]             = "tcp://127.0.0.1:4243"
 
 
 Attributes
@@ -53,6 +54,12 @@ Openstack Docker attributes are in the attribute namespace ["openstack"]["docker
 * `openstack["docker"]["glance_db_backend"]["path"]`
 * `openstack["docker"]["glance_db_backend"]["files"]`
 
+Putting it all together
+=======================
+
+You can use the docker branch of my openstack-chef-repo to build a whole working stack
+* https://github.com/paulczar/openstack-chef-repo/tree/docker
+
 
 Testing
 =====
@@ -64,11 +71,13 @@ Tests are defined in Strainerfile.
 To run tests:
 
 *old method*
+
     $ bundle install # install gem dependencies 
     $ bundle exec berks install # install cookbook dependencies
     $ bundle exec strainer test # run tests
 
 *new method*
+
     $ ./test [clean|run|bundle|berks|strainer]
 
 License and Author
